@@ -1,19 +1,3 @@
-<?php
-include 'koneksi.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tipe_kamar = $_POST['tipe_kamar'];
-    $ukuran     = $_POST['ukuran'];
-    $harga      = $_POST['harga'];
-    $fasilitas  = $_POST['fasilitas'];
-
-    $query = "INSERT INTO kamar (tipe_kamar, ukuran, harga, fasilitas) VALUES ('$tipe_kamar', '$ukuran', '$harga', '$fasilitas')";
-    if (mysqli_query($koneksi, $query)) {
-        header("Location: index.php");
-        exit();
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -24,7 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="p-4 bg-light">
     <div class="container bg-white p-4 rounded shadow-sm" style="max-width: 600px;">
         <h2 class="text-dark fw-bold mb-3">Form Tambah Kamar</h2>
-        <form action="tambah.php" method="POST">
+        <form action="{{ route('kamar.store') }}" method="POST">
+            @csrf
             <div class="mb-3">
                 <label class="form-label fw-bold">Tipe Kamar:</label>
                 <input type="text" class="form-control" name="tipe_kamar" placeholder="Contoh: Reguler / VIP" required>
@@ -42,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <textarea class="form-control" name="fasilitas" rows="3" placeholder="Contoh: Kasur, Lemari, AC" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Simpan Kamar</button>
-            <a href="index.php" class="btn btn-secondary">Batal</a>
+            <a href="{{ route('kamar.index') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 </body>
